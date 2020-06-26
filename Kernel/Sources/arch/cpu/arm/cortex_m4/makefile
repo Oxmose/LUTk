@@ -63,7 +63,7 @@ endif
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.S
 	@echo  "\e[32m  $< \e[22m\e[39m=> \e[1m\e[94m$@\e[22m\e[39m"
-	$(AS) $(ASFLAGS) $< -o $@
+	$(AS) $(ASFLAGS) $< -o $@ -I $(INC_DIR) $(DEP_INCLUDES)
 
 
 # Clean 

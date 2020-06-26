@@ -5,20 +5,17 @@
 #
 # Author: Alexy Torres Aurora Dugo
 #
-# Board module makefile. This makefile is used to compile the board arch module
-# for the desired target.
+# IO module makefile. This makefile is used to compile the IO module.
 ################################################################################
 
 # Dependencies 
-include ../../../dependencies.mk
-include ../../../../../settings.mk
+include dependencies.mk
+include ../../settings.mk
 
 # Variables definitions
 SRC_DIR    = src
-BUILD_DIR  = ../../build
-ARCH_BUILD_DIR = ../../../build
+BUILD_DIR  = build
 INC_DIR    = includes
-GLOBAL_CONFIG_DIR = ../../../../../Config/arch/stm32_f401re
 
 SRC_DEP = $(sort $(dir $(wildcard $(SRC_DIR)/*/)))
 
@@ -34,14 +31,13 @@ all: init module
 
 init: 
 	@echo "\e[1m\e[34m\n#-------------------------------------------------------------------------------\e[22m\e[39m"
-	@echo "\e[1m\e[34m| Compiling STM32 F401RE board module\e[22m\e[39m"
+	@echo "\e[1m\e[34m| Compiling IO module\e[22m\e[39m"
 	@echo "\e[1m\e[34m#-------------------------------------------------------------------------------\n\e[22m\e[39m"
 
 	@mkdir -p $(BUILD_DIR)
 
 module: compile_asm compile_cc
-	@cp $(BUILD_DIR)/* $(ARCH_BUILD_DIR)
-	@echo "\e[1m\e[92m=> Generated STM32 F401RE board module\e[22m\e[39m"
+	@echo "\e[1m\e[92m=> Generated IO module\e[22m\e[39m"
 	@echo "\e[1m\e[92m--------------------------------------------------------------------------------\n\e[22m\e[39m"
 
 # Assembly sources compilation
@@ -59,15 +55,15 @@ ifeq ($(DEBUG), TRUE)
 	@echo -n "  DEBUG "
 endif
 	@echo  "\e[32m  $< \e[22m\e[39m=> \e[1m\e[94m$@\e[22m\e[39m"
-	$(CC) $(CFLAGS) $< -o $@ -I $(INC_DIR) $(DEP_INCLUDES) -I $(GLOBAL_CONFIG_DIR)
+	$(CC) $(CFLAGS) $< -o $@ -I $(INC_DIR) $(DEP_INCLUDES)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.S
 	@echo  "\e[32m  $< \e[22m\e[39m=> \e[1m\e[94m$@\e[22m\e[39m"
-	$(AS) $(ASFLAGS) $< -o $@ -I $(INC_DIR) $(DEP_INCLUDES) -I $(GLOBAL_CONFIG_DIR)
+	$(AS) $(ASFLAGS) $< -o $@ -I $(INC_DIR) $(DEP_INCLUDES)
 
 # Clean 
 clean:
 	$(RM) -rf $(BUILD_DIR)
 	@echo "\e[1m\e[34m\n#-------------------------------------------------------------------------------\e[22m\e[39m"
-	@echo "\e[1m\e[34m| Cleaned STM32 F401RE board module\e[22m\e[39m"
+	@echo "\e[1m\e[34m| Cleaned IO module\e[22m\e[39m"
 	@echo "\e[1m\e[34m#-------------------------------------------------------------------------------\n\e[22m\e[39m"
