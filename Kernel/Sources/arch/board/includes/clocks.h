@@ -30,16 +30,4 @@
  * FUNCTIONS
  ******************************************************************************/
 
-/**
- * @brief Initializes the board clocks.
- * 
- * @brief Initializes the board clocks. This function initializes the timers
- * and various clock signals of the board. If none requires initialization
- * this function just returns successfuly.
- * 
- * @return On success NO_ERROR is return. In case of error an error code is
- * returned.
- */
-ERROR_CODE_E clocks_init(void);
-
 #endif /* #ifndef __BOARD_CLOCKS_H__ */

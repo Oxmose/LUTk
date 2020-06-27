@@ -84,9 +84,9 @@
 
 /* PLL settings for 84MHz system clock */
 #define PLLM_VALUE (HSI_CLOCK_FREQ / CLOCK_MHZ)  
-#define PLLN_VALUE 336 
-#define PLLP_VALUE 4
-#define PLLQ_VALUE 8
+#define PLLN_VALUE 192 
+#define PLLP_VALUE 2
+#define PLLQ_VALUE 4
 
 #define PLLSRC_VALUE 0
 
