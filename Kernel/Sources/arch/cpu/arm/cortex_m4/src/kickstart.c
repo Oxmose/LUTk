@@ -14,7 +14,6 @@
  ******************************************************************************/
 
 #include "error_types.h"
-#include "clocks.h"
 
 /*******************************************************************************
  * Private functions
@@ -23,8 +22,6 @@
 /*******************************************************************************
  * Public functions
  ******************************************************************************/
-
-extern ERROR_CODE_E usart_init(void);
 
 /**
  * @brief Kernel kickstart routine. 
@@ -38,12 +35,6 @@ void kernel_kickstart(void)
 {
     ERROR_CODE_E error;
     (void) error;
-
-    /* Initialize clocks */
-    error = clocks_init();
-
-    /* Initialize USART */
-    error = usart_init();
 #if 0
     if(error != NO_ERROR)
     {
