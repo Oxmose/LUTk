@@ -24,7 +24,7 @@ init:
 	@mkdir -p $(BUILD_DIR)
 
 module: 
-	$(LD) $(LDFLAGS) ../user/build/*.o -o $(BUILD_DIR)/$(KERNEL_NAME).elf $(DEP_LIBS) $(DEP_MODULES)
+	$(LD) $(LDFLAGS) ../user/build/*.o -o $(BUILD_DIR)/$(KERNEL_NAME).elf $(DEP_MODULES) $(DEP_LIBS) 
 #$(OBJCOPY) -O binary $(BUILD_DIR)/$(KERNEL_NAME).elf $(BUILD_DIR)/$(KERNEL_NAME).bin
 
 # Clean 

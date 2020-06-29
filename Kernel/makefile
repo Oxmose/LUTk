@@ -30,6 +30,7 @@ init:
 
 ifeq ($(target), stm32_f401re)
 	@cp $(CONFIG_DIR)/arch/stm32_f401re/settings.mk .
+	@cp $(CONFIG_DIR)/arch/stm32_f401re/config.h .
 else 
 	@echo "\e[1m\e[31m\n=== ERROR: Unknown target $(target)\e[22m\e[39m"
 	@echo "Available targets: $(TARGET_LIST)\n"
@@ -49,7 +50,10 @@ endif
 
 # Build the user module 
 	@make -C $(SOURCE_DIR)/user
-
+# Build the io module 
+	@make -C $(SOURCE_DIR)/io
+# Build the core module 
+	@make -C $(SOURCE_DIR)/core
 build_kernel:
 	@echo "\e[1m\e[34m\n#-------------------------------------------------------------------------------\e[22m\e[39m"
 	@echo "\e[1m\e[34m| Building kernel for target $(target)\e[22m\e[39m"

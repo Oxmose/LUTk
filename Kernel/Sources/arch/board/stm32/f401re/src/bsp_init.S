@@ -29,11 +29,9 @@
 /*******************************************************************************
  * EXTERN FUNCTIONS
  ******************************************************************************/
-.extern __bsp_icache_enable
-.extern __bsp_dcache_enable
-.extern __bsp_prefetch_enable
-.extern __bsp_sysclk_init
-.extern __bsp_pwrclk_init
+.extern bsp_flash_cache_enable
+.extern bsp_flash_prefetch_enable
+.extern bsp_clk_sys_init
 
 /*******************************************************************************
  * EXPORTED FUNCTIONS
@@ -55,12 +53,11 @@ __bsp_init:
     push {lr}
 
     /* Enable caches */
-    bl __bsp_icache_enable
-    bl __bsp_dcache_enable
-    bl __bsp_prefetch_enable
+    bl bsp_flash_cache_enable
+    bl bsp_flash_prefetch_enable
 
     /* Initialize clocks */
-    bl __bsp_sysclk_init
+    bl bsp_clk_sys_init
 
     pop  {pc}
 /*----------------------------------------------------------------------------*/

@@ -20,19 +20,26 @@
  * DEFINES
  ******************************************************************************/
 
-/* NVIC registers */
+/** @brief NVIC ISER0 register address */
 .equ NVIC_ISER0_ADDRESS, 0xE000E100
+/** @brief NVIC ISER1 register address */
 .equ NVIC_ISER1_ADDRESS, 0xE000E104
+/** @brief NVIC ISER2 register address */
 .equ NVIC_ISER2_ADDRESS, 0xE000E108
 
+/** @brief NVIC ICER0 register address */
 .equ NVIC_ICER0_ADDRESS, 0xE000E180
+/** @brief NVIC ICER1 register address */
 .equ NVIC_ICER1_ADDRESS, 0xE000E184
+/** @brief NVIC ICER2 register address */
 .equ NVIC_ICER2_ADDRESS, 0xE000E188
 
 
-/* NVIC register values */
+/** @brief NVIC AIRCR_PRIGROUP mask */
 .equ SCB_AIRCR_PRIGROUP_MASK,  0x00000700
+/** @brief NVIC VECTKEYSTAT value */
 .equ SCB_VECTKEYSTAT_VALUE,    0x05FA0000
+/** @brief NVIC VECTKEYSTAT inverted mask */
 .equ SCB_VECTKEYSTAT_INV_MASK, 0x0000FFFF
 
 
@@ -51,7 +58,6 @@
 /*******************************************************************************
  * EXPORTED FUNCTIONS
  ******************************************************************************/
-
 .global __nvic_init
 
 /*******************************************************************************
@@ -74,8 +80,8 @@ __nvic_init:
     ldr r1, =NVIC_ISER0_ADDRESS
     str r1, [r0]
 
-    /* Set 6 priority groups */
-    mov r0, #6
+    /* Set 4 priority groups */
+    mov r0, #4
     bl  __nvic_set_prio_group_count
 
     pop  {pc}

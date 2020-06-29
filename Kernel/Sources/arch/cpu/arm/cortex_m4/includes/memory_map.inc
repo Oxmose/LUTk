@@ -17,7 +17,8 @@
  * General control registers
  ******************************************************************************/
 
+/** @brief CPU CPACR address. */
 .equ GEN_CPACR_ADDR, 0xE000ED88
 
-/* System control block registers */
+/** @brief CPU SCB_AIRCR address. */
 .equ GEN_SCB_AIRCR_ADDR, 0xE000ED0C

@@ -29,8 +29,18 @@
  */
 enum ERROR_CODE
 {
-    NO_ERROR = 0,
+    /** @brief No error. */
+    NO_ERROR            = 0,
+    /** @brief Invalid parameter error. */
     ERROR_INVALID_PARAM = 1,
+    /** @brief Invalid component anlready initialized error. */
+    ERROR_ALREADY_INIT  = 2,
+    /** @brief Invalid compoment needs initialization error. */
+    ERROR_NEED_INIT     = 3,
+    /** @brief Invalid used NULL pointer error. */
+    ERROR_NULL_POINTER  = 4,
+    /** @brief Invalid divided by zero error. */
+    ERROR_DIV_BY_ZERO   = 5,
 };
 
 /**
