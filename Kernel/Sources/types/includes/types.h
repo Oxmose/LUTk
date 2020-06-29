@@ -16,6 +16,7 @@
 #ifndef __TYPES_TYPES_H__
 #define __TYPES_TYPES_H__
 
+#include "stddef.h"
 #include "stdint.h"
 
 /*******************************************************************************

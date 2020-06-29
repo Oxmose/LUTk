@@ -17,6 +17,7 @@ include ../../../../../settings.mk
 SRC_DIR    = src
 BUILD_DIR  = ../../build
 ARCH_BUILD_DIR = ../../../build
+GLOBAL_CONFIG_DIR = ../../../../../
 
 INC_DIR    = includes
 
@@ -59,11 +60,11 @@ ifeq ($(DEBUG), TRUE)
 	@echo -n "  DEBUG "
 endif
 	@echo  "\e[32m  $< \e[22m\e[39m=> \e[1m\e[94m$@\e[22m\e[39m"
-	$(CC) $(CFLAGS) $< -o $@ -I $(INC_DIR) $(DEP_INCLUDES)
+	$(CC) $(CFLAGS) $< -o $@ -I $(INC_DIR) $(DEP_INCLUDES) -I $(GLOBAL_CONFIG_DIR)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.S
 	@echo  "\e[32m  $< \e[22m\e[39m=> \e[1m\e[94m$@\e[22m\e[39m"
-	$(AS) $(ASFLAGS) $< -o $@ -I $(INC_DIR) $(DEP_INCLUDES)
+	$(AS) $(ASFLAGS) $< -o $@ -I $(INC_DIR) $(DEP_INCLUDES) -I $(GLOBAL_CONFIG_DIR)
 
 
 # Clean 

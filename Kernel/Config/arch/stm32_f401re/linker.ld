@@ -56,6 +56,8 @@ SECTIONS
         _end_rodata = .;
     } > FLASH
 
+    _start_init_data = LOADADDR(.data);
+
     /* Contains the kernel and user's data */
     .data : 
     {
@@ -68,7 +70,7 @@ SECTIONS
 
         _end_data = .;   
         
-    } > SDRAM
+    } >SDRAM AT> FLASH
 
     /* Contains the kernel and user's BSS */
     .bss : 
@@ -83,6 +85,4 @@ SECTIONS
         _end_bss = .;   
         
     } > SDRAM    
-
-    .ARM.attributes 0 : { *(.ARM.attributes) }
 }

@@ -18,7 +18,7 @@ SRC_DIR    = src
 BUILD_DIR  = ../../build
 ARCH_BUILD_DIR = ../../../build
 INC_DIR    = includes
-GLOBAL_CONFIG_DIR = ../../../../../Config/arch/stm32_f401re
+GLOBAL_CONFIG_DIR = ../../../../../
 
 SRC_DEP = $(sort $(dir $(wildcard $(SRC_DIR)/*/)))
 

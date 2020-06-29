@@ -16,6 +16,8 @@ include ../../settings.mk
 SRC_DIR    = src
 BUILD_DIR  = build
 INC_DIR    = includes
+BIN_DIR    = bin
+GLOBAL_CONFIG_DIR = ../../
 
 SRC_DEP = $(sort $(dir $(wildcard $(SRC_DIR)/*/)))
 
@@ -35,8 +37,11 @@ init:
 	@echo "\e[1m\e[34m#-------------------------------------------------------------------------------\n\e[22m\e[39m"
 
 	@mkdir -p $(BUILD_DIR)
+	@mkdir -p $(BIN_DIR)
 
 module: compile_asm compile_cc
+	@ar r $(BIN_DIR)/libio.a $(BUILD_DIR)/* 
+	@$(RM) -rf $(BUILD_DIR)
 	@echo "\e[1m\e[92m=> Generated IO module\e[22m\e[39m"
 	@echo "\e[1m\e[92m--------------------------------------------------------------------------------\n\e[22m\e[39m"
 
@@ -55,11 +60,11 @@ ifeq ($(DEBUG), TRUE)
 	@echo -n "  DEBUG "
 endif
 	@echo  "\e[32m  $< \e[22m\e[39m=> \e[1m\e[94m$@\e[22m\e[39m"
-	$(CC) $(CFLAGS) $< -o $@ -I $(INC_DIR) $(DEP_INCLUDES)
+	$(CC) $(CFLAGS) $< -o $@ -I $(INC_DIR) $(DEP_INCLUDES) -I $(GLOBAL_CONFIG_DIR)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.S
 	@echo  "\e[32m  $< \e[22m\e[39m=> \e[1m\e[94m$@\e[22m\e[39m"
-	$(AS) $(ASFLAGS) $< -o $@ -I $(INC_DIR) $(DEP_INCLUDES)
+	$(AS) $(ASFLAGS) $< -o $@ -I $(INC_DIR) $(DEP_INCLUDES) -I $(GLOBAL_CONFIG_DIR)
 
 # Clean 
 clean:

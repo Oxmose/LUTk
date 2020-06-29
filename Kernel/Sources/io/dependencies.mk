@@ -1,3 +1,3 @@
-DEP_INCLUDES=
+DEP_INCLUDES= -I ../types/includes
 
 DEP_LIBS=
