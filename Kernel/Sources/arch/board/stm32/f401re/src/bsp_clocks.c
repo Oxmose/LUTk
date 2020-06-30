@@ -19,6 +19,7 @@
 #include "bsp_power.h"
 #include "stdint.h"
 #include "config.h"
+#include "logger.h"
 
 /*******************************************************************************
  * Private Data
@@ -172,24 +173,20 @@ ERROR_CODE_E bsp_clk_gpio_enable(const GPIO_IDENTIFIER_E gpio_id)
 
     if(reg_val == 0)
     {
-#if KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL
         KERNEL_LOG_ERROR("Wrong GPIO identifer", 
-                         gpio_id, 
+                         (void*)&gpio_id, 
                          sizeof(gpio_id), 
                          ERROR_INVALID_PARAM);
-#endif
         return ERROR_INVALID_PARAM;
     }
 
     *RCC_AHB1ENR_REGISTER = *RCC_AHB1ENR_REGISTER | reg_val;
     while((*RCC_AHB1ENR_REGISTER & reg_val) == 0);
 
-#if KERNEL_LOG_LEVEL >= INFO_LOG_LEVEL
-        KERNEL_LOG_INFO("GPIO clock enabled", 
-                        gpio_id, 
-                        sizeof(gpio_id), 
-                        NO_ERROR);
-#endif
+    KERNEL_LOG_INFO("GPIO clock enabled", 
+                    (void*)&gpio_id, 
+                    sizeof(gpio_id), 
+                    NO_ERROR);
 
     return NO_ERROR;
 }
@@ -220,21 +217,20 @@ ERROR_CODE_E bsp_clk_usart_enable(const USART_IDENTIFIER_E usart_id)
             break;
 
         default:
-#if KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL
             KERNEL_LOG_ERROR("Wrong USART identifer", 
-                            usart_id, 
-                            sizeof(usart_id), 
-                            ERROR_INVALID_PARAM);
-#endif
+                             (void*)&usart_id, 
+                             sizeof(usart_id), 
+                             ERROR_INVALID_PARAM);
             error = ERROR_INVALID_PARAM;
     }
 
-#if KERNEL_LOG_LEVEL >= INFO_LOG_LEVEL
-    KERNEL_LOG_INFO("USART clock enabled", 
-                    usart_id, 
-                    sizeof(usart_id), 
-                    NO_ERROR);
-#endif
+    if(error == NO_ERROR)
+    {
+        KERNEL_LOG_INFO("USART clock enabled", 
+                        (void*)&usart_id, 
+                        sizeof(usart_id), 
+                        NO_ERROR);
+    }
 
     return error;
 }
@@ -246,12 +242,10 @@ ERROR_CODE_E bsp_clk_sys_init(void)
     /* Check init state */
     if(bsp_clk_init != 0)
     {
-#if KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL
         KERNEL_LOG_ERROR("System clock is already initialized", 
-                         ERROR_ALREADY_INIT, 
-                         sizeof(ERROR_ALREADY_INIT), 
+                         NULL, 
+                         0, 
                          ERROR_ALREADY_INIT);
-#endif
         return ERROR_ALREADY_INIT;
     }
 
@@ -292,12 +286,10 @@ ERROR_CODE_E bsp_clk_sys_init(void)
         return error;
     }
 
-#if KERNEL_LOG_LEVEL >= INFO_LOG_LEVEL
     KERNEL_LOG_INFO("System clock initialized", 
-                    NO_ERROR, 
-                    sizeof(NO_ERROR), 
+                    NULL, 
+                    0, 
                     NO_ERROR);
-#endif
 
     /* Update init state */
     bsp_clk_init = 1;
@@ -376,12 +368,10 @@ uint32_t bsp_clocks_get_freq(const CLOCK_IDENTIFIER_T clk_id)
         sysclk = 0;
     }
 
-#if KERNEL_LOG_LEVEL >= INFO_LOG_LEVEL
     KERNEL_LOG_INFO("System clock frequency requested", 
-                    (void*)(uint32_t)sysclk, 
+                    (void*)&sysclk, 
                     sizeof(sysclk), 
                     NO_ERROR);
-#endif
-
+                    
     return sysclk;
 }

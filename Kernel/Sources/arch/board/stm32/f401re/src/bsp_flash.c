@@ -18,6 +18,7 @@
 #include "cpu_api.h"
 #include "stdint.h"
 #include "config.h"
+#include "logger.h"
 
 /*******************************************************************************
  * Private Data
@@ -57,12 +58,10 @@ ERROR_CODE_E bsp_flash_set_latency(const FLASH_LATENCY_WS_E latency)
     /* Delay to ensure bit update */
     while((*FLASH_ACR_REGISTER & FLASH_ACR_LATENCY_MASK) != latency);
 
-#if KERNEL_LOG_LEVEL >= INFO_LOG_LEVEL
     KERNEL_LOG_INFO("Flash lantency changed", 
-                    latency, 
+                    (void*)&latency, 
                     sizeof(latency), 
                     NO_ERROR);
-#endif
 
     return NO_ERROR;
 }

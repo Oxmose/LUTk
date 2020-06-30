@@ -63,7 +63,7 @@ uint8_t usart_init_state = 0;
             if(KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL)         \
             {                                               \
                 KERNEL_LOG_ERROR("Invalid USART baudrate",  \
-                                 (void*)baudrate,           \
+                                 (void*)&baudrate,          \
                                  sizeof(baudrate),          \
                                  ERROR_INVALID_PARAM);      \
             }                                               \
@@ -93,7 +93,7 @@ uint8_t usart_init_state = 0;
             if(KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL)            \
             {                                                  \
                 KERNEL_LOG_ERROR("Invalid USART word length",  \
-                                 (void*)(uint32_t)wdlength,    \
+                                 (void*)&wdlength,             \
                                  sizeof(wdlength),             \
                                  ERROR_INVALID_PARAM);         \
             }                                                  \
@@ -125,7 +125,7 @@ uint8_t usart_init_state = 0;
             if(KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL)            \
             {                                                  \
                 KERNEL_LOG_ERROR("Invalid USART stop bits",    \
-                                 (void*)(uint32_t)stpbits,     \
+                                 (void*)&stpbits,              \
                                  sizeof(stpbits),              \
                                  ERROR_INVALID_PARAM);         \
             }                                                  \
@@ -156,7 +156,7 @@ uint8_t usart_init_state = 0;
             if(KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL)            \
             {                                                  \
                 KERNEL_LOG_ERROR("Invalid USART partity mode", \
-                                 (void*)(uint32_t)parity,      \
+                                 (void*)&parity,               \
                                  sizeof(parity),               \
                                  ERROR_INVALID_PARAM);         \
             }                                                  \
@@ -188,7 +188,7 @@ uint8_t usart_init_state = 0;
             if(KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL)            \
             {                                                  \
                 KERNEL_LOG_ERROR("Invalid USART control flow", \
-                                 (void*)(uint32_t)ctrlflow,    \
+                                 (void*)&ctrlflow,             \
                                  sizeof(ctrlflow),             \
                                  ERROR_INVALID_PARAM);         \
             }                                                  \
@@ -414,24 +414,20 @@ ERROR_CODE_E serial_init(const SERIAL_SETTINGS_T* settings)
 
     if(usart_init_state != 0)
     {
-#if KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL
         KERNEL_LOG_ERROR("Serial already initialized", 
-                         ERROR_ALREADY_INIT, 
-                         sizeof(ERROR_ALREADY_INIT), 
-                         ERROR_ALREADY_INIT);
-#endif        
+                         NULL, 
+                         0, 
+                         ERROR_ALREADY_INIT);      
         return ERROR_ALREADY_INIT;
     }
 
     /* Check parameters */
     if(settings == NULL)
     {
-#if KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL
         KERNEL_LOG_ERROR("Serial settings structure is NULL", 
-                         ERROR_NULL_POINTER, 
-                         sizeof(ERROR_NULL_POINTER), 
+                         NULL, 
+                         0, 
                          ERROR_NULL_POINTER);
-#endif
         return ERROR_NULL_POINTER;
     }
     CHECK_BAUDRATE(settings->baudrate);
@@ -476,12 +472,11 @@ ERROR_CODE_E serial_init(const SERIAL_SETTINGS_T* settings)
     /* Enable USART2 */
     bsp_usart_enable(USART_ID_2);
 
-#if KERNEL_LOG_LEVEL >= INFO_LOG_LEVEL
     KERNEL_LOG_INFO("USART initialized", 
-                     NO_ERROR, 
-                     sizeof(NO_ERROR), 
+                     NULL, 
+                     0, 
                      NO_ERROR);
-#endif 
+
     usart_init_state = 1;
     return NO_ERROR;
 }
@@ -491,13 +486,7 @@ ERROR_CODE_E serial_write(const char* str, const size_t length)
     size_t i;
 
     if(usart_init_state == 0)
-    {
-#if KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL
-        KERNEL_LOG_ERROR("Serial needs to be initialized", 
-                         ERROR_NEED_INIT, 
-                         sizeof(ERROR_NEED_INIT), 
-                         ERROR_NEED_INIT);
-#endif        
+    {    
         return ERROR_ALREADY_INIT;
     }
 

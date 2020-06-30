@@ -17,6 +17,7 @@
 #include "bsp_power.h"
 #include "stdint.h"
 #include "config.h"
+#include "logger.h"
 
 /*******************************************************************************
  * Private Data
@@ -40,12 +41,10 @@ ERROR_CODE_E bsp_pwr_set_scaling(const POWER_SCALING_E pwr_scaling)
     /* Delay to ensure bit update */
     while((*PWR_CR_REGISTER & PWR_CR_VOS_MASK) != pwr_scaling);
 
-#if KERNEL_LOG_LEVEL >= INFO_LOG_LEVEL
     KERNEL_LOG_INFO("Power scaling mode changed", 
-                    pwr_scaling, 
+                    (void*)&pwr_scaling, 
                     sizeof(pwr_scaling), 
                     NO_ERROR);
-#endif
 
     return NO_ERROR;
 }
