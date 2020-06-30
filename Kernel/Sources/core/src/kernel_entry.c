@@ -1,5 +1,5 @@
 /*******************************************************************************
- * @file kickstart.c
+ * @file kernel_entry.c
  *
  * @author Alexy Torres Aurora Dugo
  *
@@ -16,6 +16,13 @@
 #include "error_types.h"
 #include "config.h"
 #include "serial.h"
+#include "logger.h"
+#include "bsp_logger.h"
+#include "panic.h"
+
+/*******************************************************************************
+ * Private data
+ ******************************************************************************/
 
 /*******************************************************************************
  * Private functions
@@ -35,35 +42,32 @@
  */
 void kernel_kickstart(void)
 {
+    ERROR_CODE_E      error;
     SERIAL_SETTINGS_T ser_settings = CONFIG_UART_SETTINGS;
-    ERROR_CODE_E error;
-    (void) error;
-
-    error = serial_init(&ser_settings);
-#if 0
+    LOGGER_SETTINGS_T log_settings = {bsp_logger_write_hook};
+    
+    error = logger_init(&log_settings);
     if(error != NO_ERROR)
-    {
-        KERNEL_LOG_ERROR("Clocks initialization error", error, 1);
+    {       
         kernel_panic(error);
     }
-    KERNEL_LOG_INFO("Clocks initialized", error);
-#endif
 
-
-
-#if 0
+    /* Serial init */
+    error = serial_init(&ser_settings);
     if(error != NO_ERROR)
     {
-        KERNEL_LOG_ERROR("FPU initialization error", error, 1);
+        KERNEL_LOG_ERROR("Serial initialization error", 
+                         (void*)&error, 
+                         sizeof(error),
+                         error);
+       
+        kernel_panic(error);
     }
-    KERNEL_LOG_INFO("FPU initialized", error);
-#endif
+    KERNEL_LOG_INFO("Serial initialized", NULL, 0, error);
     
-
-    /* Initialize the NVIC */
 
     /* Initialize the MPU */
 
-    serial_write("Hardware initialized, jumping to kernel\n\r", 41);
+    KERNEL_LOG_INFO("Kernel initialized", NULL, 0, NO_ERROR);
     while(1);
 }

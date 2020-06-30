@@ -46,7 +46,7 @@
         if(KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL)                                 \
         {                                                                       \
             KERNEL_LOG_ERROR("Invalid GPIO mode/type",                          \
-                             (void*)(uint32_t)modetype,                         \
+                             (void*)&modetype,                                  \
                              sizeof(modetype),                                  \
                              ERROR_INVALID_PARAM);                              \
         }                                                                       \
@@ -59,7 +59,7 @@
         if(KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL)                                 \
         {                                                                       \
             KERNEL_LOG_ERROR("Invalid GPIO mode/type",                          \
-                             (void*)(uint32_t)modetype,                         \
+                             (void*)&modetype,                                  \
                              sizeof(modetype),                                  \
                              ERROR_INVALID_PARAM);                              \
         }                                                                       \
@@ -73,7 +73,7 @@
         if(KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL)                                 \
         {                                                                       \
             KERNEL_LOG_ERROR("Invalid GPIO mode/type",                          \
-                             (void*)(uint32_t)modetype,                         \
+                             (void*)&modetype,                                  \
                              sizeof(modetype),                                  \
                              ERROR_INVALID_PARAM);                              \
         }                                                                       \
@@ -98,7 +98,7 @@
         if(KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL)                              \
         {                                                                    \
             KERNEL_LOG_ERROR("Invalid GPIO speed",                           \
-                             (void*)(uint32_t)speed,                         \
+                             (void*)&speed,                                  \
                              sizeof(speed),                                  \
                              ERROR_INVALID_PARAM);                           \
         }                                                                    \
@@ -123,7 +123,7 @@
         if(KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL)                              \
         {                                                                    \
             KERNEL_LOG_ERROR("Invalid GPIO alternative function",            \
-                             (void*)(uint32_t)altfunc,                       \
+                             (void*)&altfunc,                                \
                              sizeof(altfunc),                                \
                              ERROR_INVALID_PARAM);                           \
         }                                                                    \
@@ -199,12 +199,10 @@ ERROR_CODE_E bsp_gpio_init(const GPIO_IDENTIFIER_E gpio_id,
     /* Check parameters */
     if(settings == NULL)
     {
-#if KERNEL_LOG_LEVEL == ERROR_LOG_LEVEL
         KERNEL_LOG_ERROR("GPIO settings structure is NULL", 
-                         ERROR_NULL_POINTER, 
-                         sizeof(ERROR_NULL_POINTER), 
+                         NULL, 
+                         0, 
                          ERROR_NULL_POINTER);
-#endif
         return ERROR_NULL_POINTER;
     }
     CHECK_MODETYPE(settings->io_modetype);
@@ -261,13 +259,10 @@ ERROR_CODE_E bsp_gpio_init(const GPIO_IDENTIFIER_E gpio_id,
                             << i * 2);
         }
     }
-
-#if KERNEL_LOG_LEVEL >= INFO_LOG_LEVEL
     KERNEL_LOG_INFO("GPIO initialized", 
-                    (void*)(uint32_t)gpio_id, 
+                    (void*)&gpio_id, 
                     sizeof(gpio_id), 
                     NO_ERROR);
-#endif
 
     return NO_ERROR;
 }
