@@ -41,6 +41,10 @@ enum ERROR_CODE
     ERROR_NULL_POINTER  = 4,
     /** @brief Invalid divided by zero error. */
     ERROR_DIV_BY_ZERO   = 5,
+    /** @brief Feature or function not available. */
+    ERROR_NOT_AVAILABLE = 6,
+    /** @brief Unkonwn interrupt. */
+    ERROR_UNKNOWN_INT   = 7,
 };
 
 /**

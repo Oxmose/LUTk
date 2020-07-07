@@ -18,38 +18,12 @@
 
 #include "stdint.h"
 #include "stddef.h"
+#include "serial_settings.h"
 #include "error_types.h"
 
 /*******************************************************************************
  * DEFINES
  ******************************************************************************/
-
-/** @brief Serial parity setting: no parity. */
-#define SERIAL_PARITY_NONE 0
-/** @brief Serial parity setting: odd parity. */
-#define SERIAL_PARITY_ODD  1
-/** @brief Serial parity setting: even parity. */
-#define SERIAL_PARITY_EVEN 2
-
-/** @brief Serial stop bits number: 0.5 bits. */
-#define SERIAL_STOP_BITS_05 0
-/** @brief Serial stop bits number: 1 bits. */
-#define SERIAL_STOP_BITS_1  1
-/** @brief Serial stop bits number: 1.5 bits. */
-#define SERIAL_STOP_BITS_15 2
-/** @brief Serial stop bits number: 2 bits. */
-#define SERIAL_STOP_BITS_2  3
-
-/** @brief Serial flow control method: no control. */
-#define SERIAL_CTRL_FLOW_NONE    0
-/** @brief Serial flow control method: XON/XOFF control. */
-#define SERIAL_CTRL_FLOW_XONXOFF 1
-/** @brief Serial flow control method: hardware CTS control. */
-#define SERIAL_CTRL_FLOW_CTS     2
-/** @brief Serial flow control method: hardware RTS control. */
-#define SERIAL_CTRL_FLOW_RTS     3
-/** @brief Serial flow control method: hardware CTSand RTS control. */
-#define SERIAL_CTRL_FLOW_CTS_RTS 4
 
 /*******************************************************************************
  * STRUCTURES

@@ -19,6 +19,9 @@
 .extern kernel_panic
 
 	.syntax unified
+.cpu cortex-m4
+.fpu softvfp
+.thumb
 	.text
 	.code 16
 @ {unsigned long long quotient, unsigned long long remainder}
@@ -28,7 +31,7 @@
 @ in r3:r2 (all unsigned)
 @
 	.thumb_func
-	.section .text.__aeabi_uldivmod
+	.section .text.__aeabi_uldivmod,"ax",%progbits
         .global __aeabi_uldivmod
 __aeabi_uldivmod:
 	cmp	r3, #0

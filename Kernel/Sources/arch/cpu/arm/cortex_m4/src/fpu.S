@@ -13,6 +13,9 @@
  * enable, disable and configure the FPU.
  ******************************************************************************/
 .syntax unified
+.cpu cortex-m4
+.fpu softvfp
+.thumb
 
 #include "memory_map.inc"
 
@@ -81,7 +84,7 @@
 /*******************************************************************************
  * CODE
  ******************************************************************************/
-.section .text
+.section .text,"ax",%progbits
 
 /**
  * @brief Initializes and enables the FPU and sets it to full compliance mode.
@@ -91,6 +94,7 @@
  * save is enabled 
  *
  */
+  .type __fpu_init, %function
 __fpu_init:
 
     /* Set FPCCR */

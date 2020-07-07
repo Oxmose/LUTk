@@ -17,6 +17,7 @@
 #define __TYPES_STDDEF_H__
 
 #include "stdint.h"
+#include "config.h"
 
 /*******************************************************************************
  * DEFINES
@@ -33,6 +34,17 @@
  * @brief Defines size_t type as a renaming for __SIZE_TYPE__.
  */
 typedef __SIZE_TYPE__ size_t;
+
+/**
+ * @brief Defines uintptr_t type as address type.
+ */
+#ifdef ARCH_64_BITS
+typedef uint64_t uintptr_t;
+#endif
+#ifdef ARCH_32_BITS
+typedef uint32_t uintptr_t;
+#endif
+
 
 /*******************************************************************************
  * STRUCTURES

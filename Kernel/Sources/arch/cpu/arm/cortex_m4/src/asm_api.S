@@ -13,6 +13,9 @@
  * API defined in the global CPU module.
  ******************************************************************************/
 .syntax unified
+.cpu cortex-m4
+.fpu softvfp
+.thumb
 
 /*******************************************************************************
  * DEFINES
@@ -38,7 +41,7 @@
 /*******************************************************************************
  * CODE
  ******************************************************************************/
-.section .text
+.section .text,"ax",%progbits
 
 
 /**
@@ -47,6 +50,7 @@
  * @details Full memory barrier, both intended to synchronize for data and 
  * instructions barrier.
  */
+.type cpu_mem_barrier, %function
 cpu_mem_barrier:
     dsb
     isb
