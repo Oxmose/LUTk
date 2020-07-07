@@ -375,3 +375,18 @@ uint32_t bsp_clocks_get_freq(const CLOCK_IDENTIFIER_T clk_id)
                     
     return sysclk;
 }
+
+ERROR_CODE_E bsp_get_cpu_freq(uint32_t* freq)
+{
+    *freq = bsp_clocks_get_freq(BSP_CLOCK_ID_HCLK);
+    if(*freq == 0)
+    {
+        KERNEL_LOG_ERROR("System clock is not available", 
+                         NULL, 
+                         0, 
+                         ERROR_NOT_AVAILABLE);
+        return ERROR_NOT_AVAILABLE;
+    }
+
+    return NO_ERROR;
+}

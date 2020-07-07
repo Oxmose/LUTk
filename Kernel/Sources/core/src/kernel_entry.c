@@ -19,6 +19,7 @@
 #include "logger.h"
 #include "bsp_logger.h"
 #include "panic.h"
+#include "cpu_timer.h"
 
 /*******************************************************************************
  * Private data
@@ -28,19 +29,7 @@
  * Private functions
  ******************************************************************************/
 
-/*******************************************************************************
- * Public functions
- ******************************************************************************/
-
-/**
- * @brief Kernel kickstart routine. 
- * 
- * @details Kernel kickstart routine. This function calls the different 
- * initialization modules required before starting the kernel core.
- * 
- * @warning This function should never return.
- */
-void kernel_kickstart(void)
+static void early_init(void)
 {
     ERROR_CODE_E      error;
     SERIAL_SETTINGS_T ser_settings = CONFIG_UART_SETTINGS;
@@ -64,10 +53,55 @@ void kernel_kickstart(void)
         kernel_panic(error);
     }
     KERNEL_LOG_INFO("Serial initialized", NULL, 0, error);
-    
+}
 
-    /* Initialize the MPU */
+/*******************************************************************************
+ * Public functions
+ ******************************************************************************/
+
+/**
+ * @brief Kernel kickstart routine. 
+ * 
+ * @details Kernel kickstart routine. This function calls the different 
+ * initialization modules required before starting the kernel core.
+ * 
+ * @warning This function should never return.
+ */
+__attribute__((__noreturn__))
+void kernel_kickstart(void)
+{
+    ERROR_CODE_E      error;
+
+    /* Early init */
+    early_init();    
+    
+    /* Interrupt init */
+        
+    /* Timers init */
+    error = cpu_timer_set_frequency(CONFIG_MAIN_TIMER_TICK_FREQ);
+    if(error != NO_ERROR)
+    {
+        KERNEL_LOG_ERROR("CPU timer initialization error", 
+                         (void*)&error, 
+                         sizeof(error),
+                         error);
+       
+        kernel_panic(error);
+    }
+    error = cpu_timer_enable(1);
+    if(error != NO_ERROR)
+    {
+        KERNEL_LOG_ERROR("CPU timer initialization error", 
+                         (void*)&error, 
+                         sizeof(error),
+                         error);
+       
+        kernel_panic(error);
+    }
+
+    /* Memory management init */
 
     KERNEL_LOG_INFO("Kernel initialized", NULL, 0, NO_ERROR);
+    
     while(1);
 }

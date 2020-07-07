@@ -13,6 +13,9 @@
  * manage the Nested Vectored Interrupt Controller.
  ******************************************************************************/
 .syntax unified
+.cpu cortex-m4
+.fpu softvfp
+.thumb
 
 #include "memory_map.inc"
 
@@ -63,7 +66,7 @@
 /*******************************************************************************
  * CODE
  ******************************************************************************/
-.section .text
+.section .text,"ax",%progbits
 
 /**
  * @brief Initializes the NVIC.
@@ -72,16 +75,17 @@
  * deny any external interrupt.
  *
  */
+.type __nvic_init, %function
 __nvic_init:
     push {lr}
 
     /* Enable 16 first interrupts */
     ldr r0, =0x0000FFFF
     ldr r1, =NVIC_ISER0_ADDRESS
-    str r1, [r0]
+    str r0, [r1]
 
-    /* Set 4 priority groups */
-    mov r0, #4
+    /* Set 2 priority groups */
+    mov r0, #2
     bl  __nvic_set_prio_group_count
 
     pop  {pc}
@@ -97,6 +101,7 @@ __nvic_init:
  * @param r0 contains the number of groups.
  *
  */
+.type __nvic_set_prio_group_count, %function
 __nvic_set_prio_group_count:
     push {r3}
     mov r1, #7

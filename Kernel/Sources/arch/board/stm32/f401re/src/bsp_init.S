@@ -13,6 +13,9 @@
  * routines used to manage the BSP initialization.
  ******************************************************************************/
 .syntax unified
+.cpu cortex-m4
+.fpu softvfp
+.thumb
 
 /*******************************************************************************
  * DEFINES
@@ -41,7 +44,7 @@
 /*******************************************************************************
  * CODE
  ******************************************************************************/
-.section .text
+.section .text,"ax",%progbits
 
 /**
 ­ * @brief Initializes the BSP components.
@@ -49,6 +52,7 @@
  * @details Initializes the BSP components by enabling caches, setting clocks,
  * flash settings, timers GPIOs and UART.
  */
+ .type __bsp_init, %function
 __bsp_init:
     push {lr}
 

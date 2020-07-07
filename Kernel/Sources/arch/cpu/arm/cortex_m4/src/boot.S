@@ -12,12 +12,15 @@
  * @details Kernel entry point and cpu initialization.
  ******************************************************************************/
 .syntax unified
+.cpu cortex-m4
+.fpu softvfp
+.thumb
 
 /*******************************************************************************
  * DEFINES
  ******************************************************************************/
 
-.equ MAIN_STACK_ADDRESS, 0x20001000
+.equ MAIN_STACK_ADDRESS, 0x20018000
 
 /*******************************************************************************
  * MACRO DEFINE
@@ -125,178 +128,6 @@
 .extern __extint_81
 .extern __extint_82
 .extern __extint_83
-.extern __extint_84
-.extern __extint_85
-.extern __extint_86
-.extern __extint_87
-.extern __extint_88
-.extern __extint_89
-.extern __extint_90
-.extern __extint_91
-.extern __extint_92
-.extern __extint_93
-.extern __extint_94
-.extern __extint_95
-.extern __extint_96
-.extern __extint_97
-.extern __extint_98
-.extern __extint_99
-.extern __extint_100
-.extern __extint_101
-.extern __extint_102
-.extern __extint_103
-.extern __extint_104
-.extern __extint_105
-.extern __extint_106
-.extern __extint_107
-.extern __extint_108
-.extern __extint_109
-.extern __extint_110
-.extern __extint_111
-.extern __extint_112
-.extern __extint_113
-.extern __extint_114
-.extern __extint_115
-.extern __extint_116
-.extern __extint_117
-.extern __extint_118
-.extern __extint_119
-.extern __extint_120
-.extern __extint_121
-.extern __extint_122
-.extern __extint_123
-.extern __extint_124
-.extern __extint_125
-.extern __extint_126
-.extern __extint_127
-.extern __extint_128
-.extern __extint_129
-.extern __extint_130
-.extern __extint_131
-.extern __extint_132
-.extern __extint_133
-.extern __extint_134
-.extern __extint_135
-.extern __extint_136
-.extern __extint_137
-.extern __extint_138
-.extern __extint_139
-.extern __extint_140
-.extern __extint_141
-.extern __extint_142
-.extern __extint_143
-.extern __extint_144
-.extern __extint_145
-.extern __extint_146
-.extern __extint_147
-.extern __extint_148
-.extern __extint_149
-.extern __extint_150
-.extern __extint_151
-.extern __extint_152
-.extern __extint_153
-.extern __extint_154
-.extern __extint_155
-.extern __extint_156
-.extern __extint_157
-.extern __extint_158
-.extern __extint_159
-.extern __extint_160
-.extern __extint_161
-.extern __extint_162
-.extern __extint_163
-.extern __extint_164
-.extern __extint_165
-.extern __extint_166
-.extern __extint_167
-.extern __extint_168
-.extern __extint_169
-.extern __extint_170
-.extern __extint_171
-.extern __extint_172
-.extern __extint_173
-.extern __extint_174
-.extern __extint_175
-.extern __extint_176
-.extern __extint_177
-.extern __extint_178
-.extern __extint_179
-.extern __extint_180
-.extern __extint_181
-.extern __extint_182
-.extern __extint_183
-.extern __extint_184
-.extern __extint_185
-.extern __extint_186
-.extern __extint_187
-.extern __extint_188
-.extern __extint_189
-.extern __extint_190
-.extern __extint_191
-.extern __extint_192
-.extern __extint_193
-.extern __extint_194
-.extern __extint_195
-.extern __extint_196
-.extern __extint_197
-.extern __extint_198
-.extern __extint_199
-.extern __extint_200
-.extern __extint_201
-.extern __extint_202
-.extern __extint_203
-.extern __extint_204
-.extern __extint_205
-.extern __extint_206
-.extern __extint_207
-.extern __extint_208
-.extern __extint_209
-.extern __extint_210
-.extern __extint_211
-.extern __extint_212
-.extern __extint_213
-.extern __extint_214
-.extern __extint_215
-.extern __extint_216
-.extern __extint_217
-.extern __extint_218
-.extern __extint_219
-.extern __extint_220
-.extern __extint_221
-.extern __extint_222
-.extern __extint_223
-.extern __extint_224
-.extern __extint_225
-.extern __extint_226
-.extern __extint_227
-.extern __extint_228
-.extern __extint_229
-.extern __extint_230
-.extern __extint_231
-.extern __extint_232
-.extern __extint_233
-.extern __extint_234
-.extern __extint_235
-.extern __extint_236
-.extern __extint_237
-.extern __extint_238
-.extern __extint_239
-.extern __extint_240
-.extern __extint_241
-.extern __extint_242
-.extern __extint_243
-.extern __extint_244
-.extern __extint_245
-.extern __extint_246
-.extern __extint_247
-.extern __extint_248
-.extern __extint_249
-.extern __extint_250
-.extern __extint_251
-.extern __extint_252
-.extern __extint_253
-.extern __extint_254
-.extern __extint_255
 
 /*******************************************************************************
  * EXPORTED FUNCTIONS
@@ -308,7 +139,8 @@
  * CODE
  ******************************************************************************/
 .section .int_vect,"a",%progbits
-
+          
+.type  __rst_vector, %object
 __rst_vector:
     .word MAIN_STACK_ADDRESS     /* Reset MSP */
     .word __rst_handler          /* Reset PC */
@@ -411,187 +243,16 @@ __rst_vector:
     .word __extint_81
     .word __extint_82
     .word __extint_83
-    .word __extint_84
-    .word __extint_85
-    .word __extint_86
-    .word __extint_87
-    .word __extint_88
-    .word __extint_89
-    .word __extint_90
-    .word __extint_91
-    .word __extint_92
-    .word __extint_93
-    .word __extint_94
-    .word __extint_95
-    .word __extint_96
-    .word __extint_97
-    .word __extint_98
-    .word __extint_99
-    .word __extint_100
-    .word __extint_101
-    .word __extint_102
-    .word __extint_103
-    .word __extint_104
-    .word __extint_105
-    .word __extint_106
-    .word __extint_107
-    .word __extint_108
-    .word __extint_109
-    .word __extint_110
-    .word __extint_111
-    .word __extint_112
-    .word __extint_113
-    .word __extint_114
-    .word __extint_115
-    .word __extint_116
-    .word __extint_117
-    .word __extint_118
-    .word __extint_119
-    .word __extint_120
-    .word __extint_121
-    .word __extint_122
-    .word __extint_123
-    .word __extint_124
-    .word __extint_125
-    .word __extint_126
-    .word __extint_127
-    .word __extint_128
-    .word __extint_129
-    .word __extint_130
-    .word __extint_131
-    .word __extint_132
-    .word __extint_133
-    .word __extint_134
-    .word __extint_135
-    .word __extint_136
-    .word __extint_137
-    .word __extint_138
-    .word __extint_139
-    .word __extint_140
-    .word __extint_141
-    .word __extint_142
-    .word __extint_143
-    .word __extint_144
-    .word __extint_145
-    .word __extint_146
-    .word __extint_147
-    .word __extint_148
-    .word __extint_149
-    .word __extint_150
-    .word __extint_151
-    .word __extint_152
-    .word __extint_153
-    .word __extint_154
-    .word __extint_155
-    .word __extint_156
-    .word __extint_157
-    .word __extint_158
-    .word __extint_159
-    .word __extint_160
-    .word __extint_161
-    .word __extint_162
-    .word __extint_163
-    .word __extint_164
-    .word __extint_165
-    .word __extint_166
-    .word __extint_167
-    .word __extint_168
-    .word __extint_169
-    .word __extint_170
-    .word __extint_171
-    .word __extint_172
-    .word __extint_173
-    .word __extint_174
-    .word __extint_175
-    .word __extint_176
-    .word __extint_177
-    .word __extint_178
-    .word __extint_179
-    .word __extint_180
-    .word __extint_181
-    .word __extint_182
-    .word __extint_183
-    .word __extint_184
-    .word __extint_185
-    .word __extint_186
-    .word __extint_187
-    .word __extint_188
-    .word __extint_189
-    .word __extint_190
-    .word __extint_191
-    .word __extint_192
-    .word __extint_193
-    .word __extint_194
-    .word __extint_195
-    .word __extint_196
-    .word __extint_197
-    .word __extint_198
-    .word __extint_199
-    .word __extint_200
-    .word __extint_201
-    .word __extint_202
-    .word __extint_203
-    .word __extint_204
-    .word __extint_205
-    .word __extint_206
-    .word __extint_207
-    .word __extint_208
-    .word __extint_209
-    .word __extint_210
-    .word __extint_211
-    .word __extint_212
-    .word __extint_213
-    .word __extint_214
-    .word __extint_215
-    .word __extint_216
-    .word __extint_217
-    .word __extint_218
-    .word __extint_219
-    .word __extint_220
-    .word __extint_221
-    .word __extint_222
-    .word __extint_223
-    .word __extint_224
-    .word __extint_225
-    .word __extint_226
-    .word __extint_227
-    .word __extint_228
-    .word __extint_229
-    .word __extint_230
-    .word __extint_231
-    .word __extint_232
-    .word __extint_233
-    .word __extint_234
-    .word __extint_235
-    .word __extint_236
-    .word __extint_237
-    .word __extint_238
-    .word __extint_239
-    .word __extint_240
-    .word __extint_241
-    .word __extint_242
-    .word __extint_243
-    .word __extint_244
-    .word __extint_245
-    .word __extint_246
-    .word __extint_247
-    .word __extint_248
-    .word __extint_249
-    .word __extint_250
-    .word __extint_251
-    .word __extint_252
-    .word __extint_253
-    .word __extint_254
-    .word __extint_255
-
-.section .boot_code
-
+    
+.section .boot_code,"ax",%progbits
+.type __rst_handler, %function
 __rst_handler:
     b __kernel_init
 
 /**
  * Initializes the CPU registers at boot time.
  */
+.type __kernel_init, %function
 __kernel_init:
     /* Init lo registers */
     eor r0, r0
