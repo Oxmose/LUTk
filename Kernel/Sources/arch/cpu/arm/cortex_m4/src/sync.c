@@ -1,45 +1,44 @@
 /*******************************************************************************
- * @file cpu_api.h
+ * @file sync.c
  *
  * @author Alexy Torres Aurora Dugo
  *
- * @date 25/06/2020
+ * @date 07/07/2020
  *
  * @version 1.0
  *
- * @brief CPU API definitions.
+ * @brief CPU synchronization primitives definitions.
  *
- * @details CPU API definitions. This module contains the routines used by the 
- * kernel to access the CPU and use its features.
+ * @details CPU synchronization primitives definitions. This module contains the
+ * routines used by the kernel to synchronize or ensure mutual exclusion.
  ******************************************************************************/
 
-#ifndef __CPU_CPU_API_H__
-#define __CPU_CPU_API_H__
-
+#include "sync.h"
+#include "sync_def.h"
 #include "stdint.h"
+#include "cpu_api.h"
 
 /*******************************************************************************
- * DEFINES
+ * Private data
  ******************************************************************************/
 
 /*******************************************************************************
- * STRUCTURES
+ * Private functions
  ******************************************************************************/
 
 /*******************************************************************************
- * FUNCTIONS
+ * Public functions
  ******************************************************************************/
 
-/**
- * @brief Full memory barrier.
- * 
- * @details Full memory barrier, both intended to synchronize for data and 
- * instructions barrier.
- */
-void cpu_mem_barrier(void);
+void enter_critical(CRITICAL_STRUCT_T* crit)
+{
+    crit->int_state = disable_interrupt();
+}
 
-uint8_t disable_interrupt(void);
-
-void enable_interrupt(void);
-
-#endif /* #ifndef __CPU_CPU_API_H__ */
+void exit_critical(CRITICAL_STRUCT_T* crit)
+{
+    if(crit->int_state)
+    {
+        enable_interrupt();
+    }
+}

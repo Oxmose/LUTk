@@ -15,6 +15,7 @@
 
 #include "error_types.h"
 #include "panic.h"
+#include "cpu_api.h"
 
 /*******************************************************************************
  * Private data
@@ -30,6 +31,7 @@
 
 void kernel_panic(const ERROR_CODE_E reason)
 {
+    disable_interrupt();
 
     (void) reason;
     

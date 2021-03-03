@@ -54,6 +54,9 @@ endif
 	@make -C $(SOURCE_DIR)/io
 # Build the core module 
 	@make -C $(SOURCE_DIR)/core
+# Build the lob module 
+	@make -C $(SOURCE_DIR)/lib
+
 build_kernel:
 	@echo "\e[1m\e[34m\n#-------------------------------------------------------------------------------\e[22m\e[39m"
 	@echo "\e[1m\e[34m| Building kernel for target $(target)\e[22m\e[39m"

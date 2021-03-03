@@ -5,7 +5,7 @@
 #
 # Author: Alexy Torres Aurora Dugo
 #
-# library module makefile. This makefile is used to compile the library module.
+# Library module makefile. This makefile is used to compile the library module.
 ################################################################################
 
 # Dependencies 
@@ -40,7 +40,7 @@ init:
 	@mkdir -p $(BIN_DIR)
 
 module: compile_asm compile_cc
-	@ar r $(BIN_DIR)/libio.a $(BUILD_DIR)/* 
+	@ar r $(BIN_DIR)/libkernel.a $(BUILD_DIR)/* 
 	@$(RM) -rf $(BUILD_DIR)
 	@echo "\e[1m\e[92m=> Generated lib module\e[22m\e[39m"
 	@echo "\e[1m\e[92m--------------------------------------------------------------------------------\n\e[22m\e[39m"

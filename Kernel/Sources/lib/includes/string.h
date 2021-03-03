@@ -1,5 +1,5 @@
 /*******************************************************************************
- * @file stddef.h
+ * @file string.h
  *
  * @author Alexy Torres Aurora Dugo
  *
@@ -7,44 +7,19 @@
  *
  * @version 1.0
  *
- * @brief Standard definitions for the kernel.
- *
- * @details Standard definitions for the kernel. Contains the UTK error codes
- * definition, and some types definitions..
+ * @brief Kernel's string library.
+ * 
+ * @details Kernel's string library.
  ******************************************************************************/
 
-#ifndef __LIB_STDDEF_H__
-#define __LIB_STDDEF_H__
+#ifndef __LIB_STRING_H__
+#define __LIB_STRING_H__
 
-#include "stdint.h"
-#include "config.h"
+#include "stddef.h"
 
 /*******************************************************************************
  * DEFINES
  ******************************************************************************/
-
-/** @brief Kernel's NULL definition. */
-#define NULL ((void*)0)
-
-#ifndef __SIZE_TYPE__
-#error __SIZE_TYPE__ not defined
-#endif
-
-/**
- * @brief Defines size_t type as a renaming for __SIZE_TYPE__.
- */
-typedef __SIZE_TYPE__ size_t;
-
-/**
- * @brief Defines uintptr_t type as address type.
- */
-#ifdef ARCH_64_BITS
-typedef uint64_t uintptr_t;
-#endif
-#ifdef ARCH_32_BITS
-typedef uint32_t uintptr_t;
-#endif
-
 
 /*******************************************************************************
  * STRUCTURES
@@ -54,4 +29,18 @@ typedef uint32_t uintptr_t;
  * FUNCTIONS
  ******************************************************************************/
 
-#endif /* #ifndef __LIB_STDDEF_H__ */
+
+/**
+ * @brief Fill block of memory.
+ * 
+ * @details Sets the first num bytes of the block of memory pointed by ptr to 
+ * the specified value (interpreted as an unsigned char).
+ * 
+ * @param[out] ptr Pointer to the block of memory to fill.
+ * @param[in] value Value to be set. The value is passed as an int, but the function 
+ * fills the block of memory using the unsigned char conversion of this value.
+ * @param[in] num Number of bytes to be set to the value.
+ */
+void* memset(void* ptr, int value, size_t num);
+
+#endif /* #ifndef __LIB_STRING_H__ */

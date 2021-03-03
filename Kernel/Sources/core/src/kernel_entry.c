@@ -35,7 +35,7 @@ static void early_init(void)
     SERIAL_SETTINGS_T ser_settings = CONFIG_UART_SETTINGS;
     LOGGER_SETTINGS_T log_settings = {bsp_logger_write_hook};
     
-    error = logger_init(&log_settings);
+    error = kernel_logger_init(&log_settings);
     if(error != NO_ERROR)
     {       
         kernel_panic(error);

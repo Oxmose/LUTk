@@ -29,7 +29,7 @@ const char hex_table[] =
      {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
 /** @brief Stores the logger initialization state. */
-uint8_t logger_init_state = 0;
+uint8_t kernel_logger_init_state = 0;
 
 /*******************************************************************************
  * Private functions
@@ -95,7 +95,7 @@ static void logger_log(const char* msg, const void* data,
  * Public functions
  ******************************************************************************/
 
-ERROR_CODE_E logger_init(const LOGGER_SETTINGS_T* settings)
+ERROR_CODE_E kernel_logger_init(const LOGGER_SETTINGS_T* settings)
 {
     if(settings == NULL)
     {
@@ -104,7 +104,7 @@ ERROR_CODE_E logger_init(const LOGGER_SETTINGS_T* settings)
 
     logger_settings = *settings;
 
-    logger_init_state = 1;
+    kernel_logger_init_state = 1;
 
     return NO_ERROR;
 }
@@ -113,7 +113,7 @@ ERROR_CODE_E logger_init(const LOGGER_SETTINGS_T* settings)
 void KERNEL_LOG_INFO(const char* msg, const void* data, 
                      const size_t data_size, const ERROR_CODE_E state)
 {
-    if(logger_init_state != 0)
+    if(kernel_logger_init_state != 0)
     {
         /* Create the error message */
         logger_settings.logger_buffer_write("[INFO] ", 7);
@@ -126,7 +126,7 @@ void KERNEL_LOG_INFO(const char* msg, const void* data,
 void KERNEL_LOG_WARNING(const char* msg, const void* data, 
                         const size_t data_size, const ERROR_CODE_E state)
 {
-    if(logger_init_state != 0)
+    if(kernel_logger_init_state != 0)
     {
         logger_settings.logger_buffer_write("[WARN] ", 7);
         logger_log(msg, data, data_size, state);
@@ -138,7 +138,7 @@ void KERNEL_LOG_WARNING(const char* msg, const void* data,
 void KERNEL_LOG_ERROR(const char* msg, const void* data, 
                       const size_t data_size, const ERROR_CODE_E state)
 {
-    if(logger_init_state != 0)
+    if(kernel_logger_init_state != 0)
     {
         logger_settings.logger_buffer_write("[ERROR] ", 8);
         logger_log(msg, data, data_size, state);

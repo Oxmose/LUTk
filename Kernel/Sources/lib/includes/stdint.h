@@ -12,8 +12,8 @@
  * @details Define basics int types for the kernel.
  ******************************************************************************/
 
-#ifndef __TYPES_STDINT_H__
-#define __TYPES_STDINT_H__
+#ifndef __LIB_STDINT_H__
+#define __LIB_STDINT_H__
 
 /*******************************************************************************
  * DEFINES
@@ -88,4 +88,4 @@ typedef unsigned long long uint64_t;
  * FUNCTIONS
  ******************************************************************************/
 
-#endif /* #ifndef __TYPES_STDINT_H__ */
+#endif /* #ifndef __LIB_STDINT_H__ */

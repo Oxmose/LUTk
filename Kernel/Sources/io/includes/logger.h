@@ -28,17 +28,39 @@
  * STRUCTURES
  ******************************************************************************/
 
+/** @brief Logger settings structure that contains all the data needed to
+ * manage logging process.
+ */
 struct LOGGER_SETTINGS
 {
+    /** 
+     * @brief Hook used to send logging data to the desired outout.
+     * 
+     * @param[in] str The string to log.
+     * @param[in] length The length of the string to log.
+     */
     void(*logger_buffer_write)(const char* str, const size_t length);
 };
+
+/** @brief Short hand for struct LOGGER_SETTINGS. */
 typedef struct LOGGER_SETTINGS LOGGER_SETTINGS_T;
 
 /*******************************************************************************
  * FUNCTIONS
  ******************************************************************************/
 
-ERROR_CODE_E logger_init(const LOGGER_SETTINGS_T* settings);
+/** 
+ * @brief Initializes the logger.
+ * 
+ * @details Initializes the kernel logger by setting the output hook and 
+ * other settings choosen by the user.
+ * 
+ * @param[in] settings The settings used to initialize the logger.
+ * 
+ * @return NO_ERROR is returned in case of success. Otherwise an error code is
+ * returned. Please refer to the list of the standard error codes.
+ */
+ERROR_CODE_E kernel_logger_init(const LOGGER_SETTINGS_T* settings);
 
 #if KERNEL_LOG_LEVEL >= INFO_LOG_LEVEL
     /** 

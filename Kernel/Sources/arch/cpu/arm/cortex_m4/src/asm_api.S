@@ -37,6 +37,8 @@
  * EXPORTED FUNCTIONS
  ******************************************************************************/
 .global cpu_mem_barrier
+.global disable_interrupt
+.global enable_interrupt
 
 /*******************************************************************************
  * CODE
@@ -55,6 +57,36 @@ cpu_mem_barrier:
     dsb
     isb
     bx lr
+/*----------------------------------------------------------------------------*/
+
+/**
+ * @brief Disables interrupts and return the interrupt mask in R0.
+ * 
+ * @details Disables interrupts and return the interrupt mask in R0.
+ *
+ * @return The interrupt mask is returned in R0
+ */
+.type disable_interrupt, %function
+disable_interrupt:
+    mrs r1, PRIMASK
+    mov r0, r1
+    and r0, 1
+    bic r1, 1
+    msr PRIMASK, r1
+    bx  lr
+/*----------------------------------------------------------------------------*/
+
+/**
+ * @brief Enables interrupts.
+ * 
+ * @details Enables interrupts.
+ */
+.type enable_interrupt, %function
+enable_interrupt:
+    mrs r1, PRIMASK
+    orr r1, r1, 1
+    msr PRIMASK, r1 
+    bx  lr
 /*----------------------------------------------------------------------------*/
 
 /*******************************************************************************

@@ -1,50 +1,26 @@
 /*******************************************************************************
- * @file stddef.h
+ * @file sync_def.c
  *
  * @author Alexy Torres Aurora Dugo
  *
- * @date 04/10/2017
+ * @date 07/07/2020
  *
  * @version 1.0
  *
- * @brief Standard definitions for the kernel.
+ * @brief CPU synchronization primitives definitions.
  *
- * @details Standard definitions for the kernel. Contains the UTK error codes
- * definition, and some types definitions..
+ * @details CPU synchronization primitives definitions. This module contains the
+ * routines used by the kernel to synchronize or ensure mutual exclusion.
  ******************************************************************************/
 
-#ifndef __LIB_STDDEF_H__
-#define __LIB_STDDEF_H__
+#ifndef __CPU_SYNC_DEF_H__
+#define __CPU_SYNC_DEF_H__
 
 #include "stdint.h"
-#include "config.h"
 
 /*******************************************************************************
  * DEFINES
  ******************************************************************************/
-
-/** @brief Kernel's NULL definition. */
-#define NULL ((void*)0)
-
-#ifndef __SIZE_TYPE__
-#error __SIZE_TYPE__ not defined
-#endif
-
-/**
- * @brief Defines size_t type as a renaming for __SIZE_TYPE__.
- */
-typedef __SIZE_TYPE__ size_t;
-
-/**
- * @brief Defines uintptr_t type as address type.
- */
-#ifdef ARCH_64_BITS
-typedef uint64_t uintptr_t;
-#endif
-#ifdef ARCH_32_BITS
-typedef uint32_t uintptr_t;
-#endif
-
 
 /*******************************************************************************
  * STRUCTURES
@@ -54,4 +30,6 @@ typedef uint32_t uintptr_t;
  * FUNCTIONS
  ******************************************************************************/
 
-#endif /* #ifndef __LIB_STDDEF_H__ */
+
+
+#endif /* #ifndef __CPU_SYNC_DEF_H__ */
